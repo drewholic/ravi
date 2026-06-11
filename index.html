@@ -1,1106 +1,142 @@
-from pathlib import Path
-import zipfile
-
-base = Path("/mnt/data/web_for_ravi")
-assets = base / "assets"
-assets.mkdir(parents=True, exist_ok=True)
-
-index_html = """<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>For Ravi</title>
+  <title>Untuk Kamu 💗</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <canvas id="particles"></canvas>
 
-  <div class="ambient ambient-one"></div>
-  <div class="ambient ambient-two"></div>
-  <div class="ambient ambient-three"></div>
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
 
-  <main class="app">
-    <section class="page active" data-page="0">
-      <div class="card cover-card">
-        <p class="small-label">a little pause for you</p>
-        <h1>Ravi,<br><span>take a minute.</span></h1>
-        <p class="body-text">
-          Gua bikin ini bukan buat berlebihan. Cuma pengen ngasih lu satu tempat kecil
-          yang tenang, manis, dan jujur.
+  <section class="opening" id="opening">
+    <div class="opening-card">
+      <div class="heart-icon">💌</div>
+      <p class="mini">ada pesan kecil buat kamu...</p>
+      <h1>Hai, <span class="nama-pacar">Sayang</span> 💗</h1>
+      <p class="opening-text">
+        Aku bikin halaman kecil ini pelan-pelan. Bukan yang paling sempurna,
+        tapi dibuat khusus biar kamu senyum.
+      </p>
+      <button id="openBtn">Buka yaa ✨</button>
+    </div>
+  </section>
+
+  <main id="content" class="content hidden">
+    <section class="hero">
+      <div class="hero-text reveal">
+        <p class="pill">for my favorite person</p>
+        <h2>
+          Untuk kamu,<br />
+          orang yang bikin hariku <span>lebih manis</span>.
+        </h2>
+        <p class="typing">
+          <span id="typingText"></span><span class="cursor">|</span>
         </p>
-        <button class="main-btn" data-next>
-          continue
-          <span>→</span>
-        </button>
+        <div class="buttons">
+          <a href="#surat" class="btn pink">Baca suratnya 💌</a>
+          <button class="btn white" id="kangenBtn">Klik kalau kangen 🥺</button>
+        </div>
+      </div>
+
+      <div class="cute-phone reveal">
+        <div class="phone-line"></div>
+        <div class="love-circle">💗</div>
+        <h3>Aku & Kamu</h3>
+        <p>dua manusia lucu yang semoga bahagia terus.</p>
       </div>
     </section>
 
-    <section class="page" data-page="1">
-      <div class="card split-card">
-        <div>
-          <p class="small-label">for the hardworker</p>
-          <h2>You did enough today.</h2>
-          <p class="body-text">
-            Gua tau lu sering keliatan kuat. Kerja keras, mikir banyak hal,
-            dan mungkin jarang ngasih ruang buat diri sendiri.
-          </p>
-          <p class="body-text soft">
-            So this is your tiny reminder: lu boleh istirahat. Lu nggak harus selalu
-            jadi orang yang paling bisa diandalkan.
-          </p>
-        </div>
-        <div class="mini-scene">
-          <div class="moon"></div>
-          <div class="cloud cloud-a"></div>
-          <div class="cloud cloud-b"></div>
-          <p>slow down, you are safe here.</p>
-        </div>
-        <div class="nav-row">
-          <button class="ghost-btn" data-prev>back</button>
-          <button class="main-btn" data-next>continue <span>→</span></button>
-        </div>
+    <section class="section">
+      <div class="section-title reveal">
+        <p class="pill">kenapa kamu?</p>
+        <h2>Hal kecil yang aku suka dari kamu</h2>
+      </div>
+
+      <div class="grid">
+        <article class="card reveal">
+          <span>01</span>
+          <h3>Senyummu</h3>
+          <p>Senyum kamu tuh sederhana, tapi efeknya bisa bikin hari aku langsung membaik.</p>
+        </article>
+
+        <article class="card reveal">
+          <span>02</span>
+          <h3>Caramu hadir</h3>
+          <p>Kadang kamu nggak perlu ngapa-ngapain. Ada kamu aja rasanya udah tenang.</p>
+        </article>
+
+        <article class="card reveal">
+          <span>03</span>
+          <h3>Lucunya kamu</h3>
+          <p>Ada aja tingkah kamu yang bikin aku gemas dan senyum sendiri.</p>
+        </article>
       </div>
     </section>
 
-    <section class="page" data-page="2">
-      <div class="card">
-        <p class="small-label">about love</p>
-        <h2>You deserve softness too.</h2>
-        <p class="body-text">
-          Beberapa kali gua lihat lu repost hal-hal tentang loving someone tapi
-          ngerasa nggak deserve to be loved.
+    <section class="section">
+      <div class="reminder reveal">
+        <p class="pill">little reminder</p>
+        <h2>Kalau kamu lagi capek...</h2>
+        <p>
+          Kamu nggak harus kuat setiap waktu. Kamu boleh istirahat,
+          boleh cerita, boleh manja. Aku tetap di sini, pelan-pelan nemenin kamu.
         </p>
-        <p class="body-text">
-          Gua nggak tau persis apa yang lu rasain waktu repost itu. Tapi gua mau lu tau:
-          menurut gua, itu salah.
-        </p>
-        <div class="quote-box">
-          <p>
-            Lu nggak harus jadi sempurna dulu buat disayang.
-            Lu nggak harus selalu kuat dulu buat ditemenin.
-          </p>
-        </div>
-        <p class="body-text">
-          Gua sayang sama lu. And I’m glad you exist in my life.
-        </p>
-        <div class="nav-row">
-          <button class="ghost-btn" data-prev>back</button>
-          <button class="main-btn" data-next>continue <span>→</span></button>
-        </div>
       </div>
     </section>
 
-    <section class="page" data-page="3">
-      <div class="card gallery-card">
-        <p class="small-label">our little frames</p>
-        <h2>Tempat foto kita.</h2>
-        <p class="body-text">
-          Nanti lu tinggal masukin foto-foto di folder <b>assets</b>, terus ganti nama file-nya
-          di <b>script.js</b>. Biar web ini jadi lebih “kita”.
-        </p>
-
-        <div class="gallery" id="gallery"></div>
-
-        <div class="nav-row">
-          <button class="ghost-btn" data-prev>back</button>
-          <button class="main-btn" data-next>continue <span>→</span></button>
-        </div>
+    <section class="section">
+      <div class="section-title reveal">
+        <p class="pill">our tiny gallery</p>
+        <h2>Tempat foto kita nanti</h2>
+        <p class="note">Nanti kotak ini bisa kamu ganti jadi foto kalian.</p>
       </div>
-    </section>
 
-    <section class="page" data-page="4">
-      <div class="card bali-card">
-        <p class="small-label">bali someday</p>
-        <h2>One day, Bali.</h2>
-        <p class="body-text">
-          Kita pernah bilang mau jalan-jalan ke Bali. Gua masih inget itu.
-          Entah kapan, entah gimana jalannya, tapi gua suka punya bayangan itu.
-        </p>
-
-        <div class="bali-window">
-          <div class="sun"></div>
-          <div class="sea"></div>
-          <div class="sand"></div>
-          <div class="palm left"></div>
-          <div class="palm right"></div>
+      <div class="gallery">
+        <div class="polaroid reveal">
+          <div class="photo">📷</div>
+          <p>foto lucu kita</p>
         </div>
-
-        <p class="body-text soft">
-          Maybe someday it’s not just a plan. Maybe someday it’s us,
-          laughing at the beach, tired but happy.
-        </p>
-
-        <div class="nav-row">
-          <button class="ghost-btn" data-prev>back</button>
-          <button class="main-btn" data-next>continue <span>→</span></button>
+        <div class="polaroid reveal">
+          <div class="photo">🌷</div>
+          <p>momen favorit</p>
+        </div>
+        <div class="polaroid reveal">
+          <div class="photo">✨</div>
+          <p>random tapi manis</p>
         </div>
       </div>
     </section>
 
-    <section class="page" data-page="5">
-      <div class="card message-card">
-        <p class="small-label">pesan dari gua</p>
-        <h2>Read this slowly.</h2>
-
-        <div class="personal-message" id="personalMessage"></div>
-
-        <div class="nav-row">
-          <button class="ghost-btn" data-prev>back</button>
-          <button class="main-btn" data-next>last page <span>→</span></button>
-        </div>
+    <section class="section letter" id="surat">
+      <div class="letter-card reveal">
+        <div class="mail">💌</div>
+        <p class="pill">surat kecil</p>
+        <h2>Buat kamu...</h2>
+        <p>
+          Terima kasih ya sudah hadir di hidup aku. Mungkin aku belum selalu
+          pandai merangkai kata, tapi aku benar-benar bersyukur punya kamu.
+          Semoga halaman kecil ini jadi pengingat bahwa kamu disayang,
+          dihargai, dan punya tempat spesial di hati aku.
+        </p>
+        <button id="surpriseBtn">Pencet ini sekali lagi 💞</button>
+        <p class="surprise" id="surpriseText">
+          Aku sayang kamu lebih dari yang bisa web kecil ini tulis.
+        </p>
       </div>
     </section>
 
-    <section class="page" data-page="6">
-      <div class="card final-card">
-        <p class="small-label">last thing</p>
-        <h2>Gua seneng lu hadir.</h2>
-        <p class="body-text">
-          Not because you’re always strong. Not because you always know what to do.
-          Tapi karena lu adalah lu.
-        </p>
-        <p class="body-text">
-          Jadi kalau dunia lagi terlalu berisik, balik aja ke halaman ini sebentar.
-          Anggap ini tempat kecil yang bilang:
-        </p>
-        <div class="final-line">
-          you are loved, Ravi.
-        </div>
-        <button class="main-btn" id="hugBtn">
-          send virtual hug
-          <span>♡</span>
-        </button>
-        <button class="ghost-btn restart" data-restart>
-          ulang dari awal
-        </button>
-      </div>
-    </section>
+    <footer>
+      <p>Dibuat dengan hati oleh <b id="namaKamuFooter">Aku</b> untuk <b class="nama-pacar">Sayang</b> 💗</p>
+    </footer>
   </main>
 
-  <div class="progress">
-    <div class="progress-bar" id="progressBar"></div>
-  </div>
-
-  <div class="toast" id="toast">virtual hug sent. pelan-pelan ya, Rav.</div>
+  <div class="toast" id="toast">peluk virtual terkirim 🤗💗</div>
 
   <script src="script.js"></script>
 </body>
 </html>
-"""
-
-style_css = """@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700;800&display=swap');
-
-:root {
-  --bg-one: #090b18;
-  --bg-two: #111b2e;
-  --text: #f8f4ef;
-  --muted: #c8c0b6;
-  --soft: #8fd3ff;
-  --blue: #6bb8ff;
-  --lavender: #b9a7ff;
-  --cream: #ffe8bd;
-  --warm: #ffb86c;
-  --glass: rgba(255, 255, 255, 0.095);
-  --border: rgba(255, 255, 255, 0.18);
-  --shadow: 0 30px 90px rgba(0, 0, 0, 0.38);
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html,
-body {
-  min-height: 100%;
-  overflow: hidden;
-}
-
-body {
-  font-family: 'Inter', sans-serif;
-  color: var(--text);
-  background:
-    radial-gradient(circle at 16% 12%, rgba(107, 184, 255, 0.24), transparent 32%),
-    radial-gradient(circle at 82% 18%, rgba(185, 167, 255, 0.22), transparent 34%),
-    radial-gradient(circle at 50% 90%, rgba(255, 184, 108, 0.14), transparent 38%),
-    linear-gradient(135deg, var(--bg-one), var(--bg-two));
-}
-
-#particles {
-  position: fixed;
-  inset: 0;
-  z-index: -4;
-}
-
-.ambient {
-  position: fixed;
-  border-radius: 999px;
-  filter: blur(8px);
-  opacity: 0.7;
-  z-index: -3;
-  animation: breathe 7s ease-in-out infinite;
-}
-
-.ambient-one {
-  width: 230px;
-  height: 230px;
-  left: -80px;
-  top: 18%;
-  background: rgba(107, 184, 255, 0.2);
-}
-
-.ambient-two {
-  width: 280px;
-  height: 280px;
-  right: -110px;
-  top: 8%;
-  background: rgba(185, 167, 255, 0.19);
-  animation-delay: 1.4s;
-}
-
-.ambient-three {
-  width: 220px;
-  height: 220px;
-  right: 18%;
-  bottom: -90px;
-  background: rgba(255, 184, 108, 0.14);
-  animation-delay: 2.2s;
-}
-
-.app {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
-}
-
-.page {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  padding: 26px;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(28px) scale(0.985);
-  filter: blur(8px);
-  transition:
-    opacity 0.7s ease,
-    visibility 0.7s ease,
-    transform 0.7s ease,
-    filter 0.7s ease;
-}
-
-.page.active {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0) scale(1);
-  filter: blur(0);
-}
-
-.card {
-  position: relative;
-  width: min(760px, 100%);
-  max-height: calc(100vh - 72px);
-  overflow-y: auto;
-  padding: clamp(28px, 5vw, 48px);
-  border: 1px solid var(--border);
-  border-radius: 34px;
-  background:
-    linear-gradient(145deg, rgba(255,255,255,0.15), rgba(255,255,255,0.065));
-  backdrop-filter: blur(22px);
-  box-shadow: var(--shadow);
-}
-
-.card::-webkit-scrollbar {
-  width: 7px;
-}
-
-.card::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.22);
-  border-radius: 999px;
-}
-
-.cover-card {
-  text-align: left;
-}
-
-.small-label {
-  display: inline-flex;
-  width: fit-content;
-  margin-bottom: 18px;
-  padding: 8px 13px;
-  border-radius: 999px;
-  border: 1px solid rgba(255,255,255,0.18);
-  color: var(--cream);
-  background: rgba(255,255,255,0.08);
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-h1,
-h2 {
-  font-family: 'DM Serif Display', serif;
-  font-weight: 400;
-  line-height: 0.96;
-  letter-spacing: -0.035em;
-}
-
-h1 {
-  font-size: clamp(4rem, 13vw, 8rem);
-  margin-bottom: 24px;
-}
-
-h1 span,
-h2 span {
-  color: var(--soft);
-}
-
-h2 {
-  font-size: clamp(2.7rem, 8vw, 5.6rem);
-  margin-bottom: 22px;
-}
-
-.body-text {
-  max-width: 650px;
-  color: var(--text);
-  line-height: 1.85;
-  font-size: clamp(1rem, 2.5vw, 1.1rem);
-}
-
-.body-text + .body-text {
-  margin-top: 16px;
-}
-
-.soft {
-  color: var(--muted);
-}
-
-.main-btn,
-.ghost-btn {
-  appearance: none;
-  border: 0;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 800;
-  border-radius: 999px;
-  transition:
-    transform 0.22s ease,
-    box-shadow 0.22s ease,
-    background 0.22s ease,
-    border-color 0.22s ease;
-}
-
-.main-btn {
-  display: inline-flex;
-  gap: 10px;
-  align-items: center;
-  justify-content: center;
-  margin-top: 28px;
-  padding: 14px 20px;
-  color: #07101f;
-  background: linear-gradient(135deg, var(--cream), var(--soft));
-  box-shadow: 0 16px 38px rgba(143, 211, 255, 0.22);
-}
-
-.main-btn:hover,
-.ghost-btn:hover {
-  transform: translateY(-4px);
-}
-
-.main-btn span {
-  transition: transform 0.22s ease;
-}
-
-.main-btn:hover span {
-  transform: translateX(4px);
-}
-
-.ghost-btn {
-  padding: 13px 18px;
-  color: var(--text);
-  border: 1px solid rgba(255,255,255,0.18);
-  background: rgba(255,255,255,0.08);
-}
-
-.nav-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 14px;
-  margin-top: 30px;
-  flex-wrap: wrap;
-}
-
-.split-card {
-  width: min(920px, 100%);
-  display: grid;
-  grid-template-columns: 1fr 0.78fr;
-  gap: 28px;
-  align-items: center;
-}
-
-.split-card .nav-row {
-  grid-column: 1 / -1;
-}
-
-.mini-scene {
-  position: relative;
-  min-height: 310px;
-  display: grid;
-  place-items: end center;
-  padding: 22px;
-  overflow: hidden;
-  border-radius: 28px;
-  border: 1px solid rgba(255,255,255,0.16);
-  background:
-    radial-gradient(circle at 50% 20%, rgba(255,232,189,0.24), transparent 28%),
-    linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.035));
-}
-
-.mini-scene p {
-  position: relative;
-  z-index: 2;
-  color: var(--muted);
-  font-weight: 700;
-  text-align: center;
-}
-
-.moon {
-  position: absolute;
-  top: 42px;
-  left: 50%;
-  width: 86px;
-  height: 86px;
-  border-radius: 50%;
-  background: var(--cream);
-  transform: translateX(-50%);
-  box-shadow: 0 0 50px rgba(255, 232, 189, 0.4);
-}
-
-.cloud {
-  position: absolute;
-  height: 44px;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.23);
-  animation: drift 8s ease-in-out infinite;
-}
-
-.cloud::before,
-.cloud::after {
-  content: "";
-  position: absolute;
-  border-radius: 50%;
-  background: inherit;
-}
-
-.cloud::before {
-  width: 50px;
-  height: 50px;
-  left: 24px;
-  top: -24px;
-}
-
-.cloud::after {
-  width: 62px;
-  height: 62px;
-  right: 22px;
-  top: -30px;
-}
-
-.cloud-a {
-  width: 165px;
-  top: 142px;
-  left: 24px;
-}
-
-.cloud-b {
-  width: 130px;
-  top: 200px;
-  right: 24px;
-  animation-delay: 1.2s;
-}
-
-.quote-box {
-  margin: 24px 0;
-  padding: 22px;
-  border-left: 3px solid var(--cream);
-  border-radius: 20px;
-  background: rgba(255,255,255,0.08);
-}
-
-.quote-box p {
-  color: var(--cream);
-  line-height: 1.75;
-  font-size: 1.05rem;
-  font-weight: 700;
-}
-
-.gallery {
-  margin-top: 26px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-}
-
-.frame {
-  min-height: 230px;
-  padding: 10px 10px 16px;
-  border-radius: 24px;
-  border: 1px solid rgba(255,255,255,0.18);
-  background: rgba(255,255,255,0.09);
-  transform: rotate(-1deg);
-}
-
-.frame:nth-child(2) {
-  transform: rotate(1.5deg) translateY(12px);
-}
-
-.frame:nth-child(3) {
-  transform: rotate(-0.6deg);
-}
-
-.frame-image {
-  height: 170px;
-  display: grid;
-  place-items: center;
-  overflow: hidden;
-  border-radius: 18px;
-  background:
-    radial-gradient(circle at 30% 20%, rgba(255,232,189,0.28), transparent 30%),
-    linear-gradient(135deg, rgba(143,211,255,0.18), rgba(185,167,255,0.14));
-  color: var(--muted);
-  font-weight: 800;
-  text-align: center;
-  padding: 16px;
-}
-
-.frame-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.frame p {
-  margin-top: 12px;
-  color: var(--muted);
-  font-weight: 700;
-  font-size: 0.9rem;
-  text-align: center;
-  line-height: 1.45;
-}
-
-.bali-window {
-  position: relative;
-  height: 280px;
-  margin: 26px 0;
-  overflow: hidden;
-  border-radius: 28px;
-  border: 1px solid rgba(255,255,255,0.18);
-  background: linear-gradient(180deg, #1d3a59 0%, #5d9ec4 48%, #f2c88b 49%, #d9a767 100%);
-}
-
-.sun {
-  position: absolute;
-  width: 94px;
-  height: 94px;
-  left: 50%;
-  top: 42px;
-  border-radius: 50%;
-  background: var(--cream);
-  box-shadow: 0 0 48px rgba(255,232,189,0.45);
-  transform: translateX(-50%);
-}
-
-.sea {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 74px;
-  height: 90px;
-  background:
-    repeating-linear-gradient(
-      -6deg,
-      rgba(255,255,255,0.22) 0 6px,
-      transparent 6px 20px
-    ),
-    linear-gradient(180deg, #61bed4, #3a85ad);
-}
-
-.sand {
-  position: absolute;
-  left: -5%;
-  right: -5%;
-  bottom: -26px;
-  height: 120px;
-  border-radius: 50% 50% 0 0;
-  background: #e7bb79;
-}
-
-.palm {
-  position: absolute;
-  bottom: 35px;
-  width: 14px;
-  height: 120px;
-  border-radius: 999px;
-  background: #5f3d2d;
-  transform-origin: bottom;
-}
-
-.palm::before {
-  content: "✦";
-  position: absolute;
-  top: -44px;
-  left: 50%;
-  font-size: 4rem;
-  color: #315d45;
-  transform: translateX(-50%);
-}
-
-.palm.left {
-  left: 48px;
-  transform: rotate(-10deg);
-}
-
-.palm.right {
-  right: 50px;
-  transform: rotate(10deg);
-}
-
-.personal-message {
-  display: grid;
-  gap: 18px;
-  margin-top: 22px;
-}
-
-.personal-message p {
-  padding: 18px 20px;
-  border-radius: 22px;
-  color: var(--text);
-  line-height: 1.8;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.13);
-}
-
-.final-card {
-  text-align: center;
-}
-
-.final-card .body-text {
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.final-line {
-  margin: 26px auto 10px;
-  width: fit-content;
-  padding: 16px 20px;
-  border-radius: 24px;
-  color: #08111f;
-  background: linear-gradient(135deg, var(--cream), var(--soft));
-  font-size: clamp(1.3rem, 5vw, 2rem);
-  font-family: 'DM Serif Display', serif;
-}
-
-.restart {
-  display: block;
-  margin: 14px auto 0;
-}
-
-.progress {
-  position: fixed;
-  left: 50%;
-  bottom: 18px;
-  width: min(280px, calc(100% - 48px));
-  height: 6px;
-  border-radius: 999px;
-  overflow: hidden;
-  background: rgba(255,255,255,0.12);
-  z-index: 12;
-}
-
-.progress-bar {
-  height: 100%;
-  width: 0%;
-  border-radius: inherit;
-  background: linear-gradient(90deg, var(--cream), var(--soft), var(--lavender));
-  transition: width 0.45s ease;
-}
-
-.toast {
-  position: fixed;
-  left: 50%;
-  top: 22px;
-  z-index: 20;
-  transform: translate(-50%, -90px);
-  width: min(420px, calc(100% - 32px));
-  padding: 14px 18px;
-  border-radius: 999px;
-  text-align: center;
-  color: #08111f;
-  font-weight: 800;
-  background: linear-gradient(135deg, var(--cream), var(--soft));
-  box-shadow: 0 20px 50px rgba(0,0,0,0.2);
-  transition: transform 0.38s ease;
-}
-
-.toast.show {
-  transform: translate(-50%, 0);
-}
-
-.float-piece {
-  position: fixed;
-  pointer-events: none;
-  z-index: 11;
-  animation: floatUp 1.4s ease forwards;
-  font-size: 1.35rem;
-}
-
-@keyframes floatUp {
-  from {
-    opacity: 1;
-    transform: translateY(0) scale(0.9) rotate(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateY(-120px) scale(1.45) rotate(16deg);
-  }
-}
-
-@keyframes breathe {
-  0%, 100% { transform: scale(1) translateY(0); }
-  50% { transform: scale(1.08) translateY(18px); }
-}
-
-@keyframes drift {
-  0%, 100% { transform: translateX(0); }
-  50% { transform: translateX(22px); }
-}
-
-@media (max-width: 760px) {
-  .page {
-    padding: 18px;
-  }
-
-  .card {
-    max-height: calc(100vh - 76px);
-    border-radius: 28px;
-  }
-
-  .split-card {
-    grid-template-columns: 1fr;
-  }
-
-  .mini-scene {
-    min-height: 240px;
-  }
-
-  .gallery {
-    grid-template-columns: 1fr;
-  }
-
-  .frame,
-  .frame:nth-child(2),
-  .frame:nth-child(3) {
-    transform: none;
-  }
-
-  .bali-window {
-    height: 230px;
-  }
-
-  .nav-row {
-    align-items: stretch;
-  }
-
-  .nav-row button {
-    flex: 1;
-  }
-
-  html,
-  body {
-    overflow: hidden;
-  }
-}
-"""
-
-script_js = """// =====================================================
-// BAGIAN YANG PALING PENTING BUAT KAMU EDIT
-// =====================================================
-
-const namaDia = "Ravi";
-const namaKamu = "gua";
-
-// Ganti teks pesan pribadi kamu di sini.
-// Boleh panjang, boleh pendek. Satu paragraf = satu tanda kutip.
-const pesanPribadi = [
-  "Rav, gua nggak tau hari ini lu lagi berat atau biasa aja. Tapi gua cuma mau bilang, gua bangga sama cara lu terus jalan meskipun mungkin capeknya nggak selalu keliatan.",
-  "Gua seneng lu hadir di hidup gua. Bukan karena lu harus jadi siapa-siapa, tapi karena ada lu aja udah bikin banyak hal terasa lebih hangat.",
-  "Kalau suatu hari lu mikir lu nggak deserve to be loved, please inget halaman ini. Menurut gua, lu pantas disayang dengan tenang, bukan cuma saat lu kuat atau saat semuanya baik-baik aja.",
-  "I like you as you are, Ravi. Not as a version that needs to prove something first."
-];
-
-// Ganti foto di sini.
-// Caranya:
-// 1. Masukkan foto ke folder assets.
-// 2. Ubah nama src di bawah sesuai nama file foto.
-// Contoh: src: \"assets/foto-ravi.jpg\"
-// Kalau belum ada foto, biarkan kosong seperti \"\".
-const fotoGallery = [
-  {
-    src: "",
-    caption: "foto pertama yang mau lu taruh di sini"
-  },
-  {
-    src: "",
-    caption: "momen kecil yang rasanya worth remembering"
-  },
-  {
-    src: "",
-    caption: "maybe one day: Bali, us, and a slow afternoon"
-  }
-];
-
-// =====================================================
-// KODE DI BAWAH INI NGGAK PERLU DIUBAH DULU
-// =====================================================
-
-const pages = Array.from(document.querySelectorAll(".page"));
-const progressBar = document.getElementById("progressBar");
-let currentPage = 0;
-
-function showPage(index) {
-  if (index < 0 || index >= pages.length) return;
-
-  pages[currentPage].classList.remove("active");
-  currentPage = index;
-  pages[currentPage].classList.add("active");
-
-  const progress = ((currentPage + 1) / pages.length) * 100;
-  progressBar.style.width = `${progress}%`;
-
-  burstPieces(window.innerWidth / 2, window.innerHeight - 60, 8);
-}
-
-document.querySelectorAll("[data-next]").forEach((button) => {
-  button.addEventListener("click", () => showPage(currentPage + 1));
-});
-
-document.querySelectorAll("[data-prev]").forEach((button) => {
-  button.addEventListener("click", () => showPage(currentPage - 1));
-});
-
-document.querySelectorAll("[data-restart]").forEach((button) => {
-  button.addEventListener("click", () => showPage(0));
-});
-
-document.addEventListener("keydown", (event) => {
-  if (event.key === "ArrowRight") showPage(currentPage + 1);
-  if (event.key === "ArrowLeft") showPage(currentPage - 1);
-});
-
-showPage(0);
-
-// Render pesan pribadi
-const personalMessage = document.getElementById("personalMessage");
-pesanPribadi.forEach((text) => {
-  const p = document.createElement("p");
-  p.textContent = text;
-  personalMessage.appendChild(p);
-});
-
-// Render gallery
-const gallery = document.getElementById("gallery");
-
-fotoGallery.forEach((item, index) => {
-  const frame = document.createElement("div");
-  frame.className = "frame";
-
-  const imageBox = document.createElement("div");
-  imageBox.className = "frame-image";
-
-  if (item.src && item.src.trim() !== "") {
-    const img = document.createElement("img");
-    img.src = item.src;
-    img.alt = item.caption || `foto ${index + 1}`;
-    imageBox.appendChild(img);
-  } else {
-    imageBox.textContent = `taruh foto ${index + 1} di sini`;
-  }
-
-  const caption = document.createElement("p");
-  caption.textContent = item.caption || "";
-
-  frame.appendChild(imageBox);
-  frame.appendChild(caption);
-  gallery.appendChild(frame);
-});
-
-// Toast / hug
-const hugBtn = document.getElementById("hugBtn");
-const toast = document.getElementById("toast");
-
-hugBtn.addEventListener("click", (event) => {
-  toast.classList.add("show");
-  burstPieces(event.clientX, event.clientY, 18);
-
-  setTimeout(() => {
-    toast.classList.remove("show");
-  }, 2300);
-});
-
-// Floating pieces
-function burstPieces(x, y, total) {
-  const pieces = ["✦", "♡", "✧", "𖤐", "•"];
-
-  for (let i = 0; i < total; i++) {
-    const piece = document.createElement("div");
-    piece.className = "float-piece";
-    piece.textContent = pieces[Math.floor(Math.random() * pieces.length)];
-    piece.style.left = `${x + Math.random() * 140 - 70}px`;
-    piece.style.top = `${y + Math.random() * 40 - 20}px`;
-    piece.style.color = Math.random() > 0.5 ? "#ffe8bd" : "#8fd3ff";
-    piece.style.animationDelay = `${Math.random() * 0.25}s`;
-    document.body.appendChild(piece);
-
-    setTimeout(() => piece.remove(), 1500);
-  }
-}
-
-// Particle background
-const canvas = document.getElementById("particles");
-const ctx = canvas.getContext("2d");
-let particles = [];
-let mouse = { x: null, y: null };
-
-function resizeCanvas() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  createParticles();
-}
-
-function createParticles() {
-  particles = [];
-  const amount = Math.min(100, Math.floor((window.innerWidth * window.innerHeight) / 12500));
-
-  for (let i = 0; i < amount; i++) {
-    particles.push({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      radius: Math.random() * 2 + 0.8,
-      dx: (Math.random() - 0.5) * 0.45,
-      dy: (Math.random() - 0.5) * 0.45,
-      alpha: Math.random() * 0.45 + 0.25
-    });
-  }
-}
-
-function drawStar(p) {
-  ctx.save();
-  ctx.translate(p.x, p.y);
-  ctx.beginPath();
-  ctx.arc(0, 0, p.radius, 0, Math.PI * 2);
-  ctx.fillStyle = `rgba(255, 232, 189, ${p.alpha})`;
-  ctx.fill();
-
-  ctx.beginPath();
-  ctx.moveTo(-p.radius * 3, 0);
-  ctx.lineTo(p.radius * 3, 0);
-  ctx.moveTo(0, -p.radius * 3);
-  ctx.lineTo(0, p.radius * 3);
-  ctx.strokeStyle = `rgba(143, 211, 255, ${p.alpha * 0.45})`;
-  ctx.lineWidth = 0.6;
-  ctx.stroke();
-  ctx.restore();
-}
-
-function updateParticles() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  particles.forEach((p) => {
-    p.x += p.dx;
-    p.y += p.dy;
-
-    if (p.x < -20 || p.x > canvas.width + 20) p.dx *= -1;
-    if (p.y < -20 || p.y > canvas.height + 20) p.dy *= -1;
-
-    if (mouse.x !== null && mouse.y !== null) {
-      const mx = mouse.x - p.x;
-      const my = mouse.y - p.y;
-      const distance = Math.sqrt(mx * mx + my * my);
-
-      if (distance < 115) {
-        p.x -= mx / 90;
-        p.y -= my / 90;
-      }
-    }
-
-    drawStar(p);
-  });
-
-  connectParticles();
-  requestAnimationFrame(updateParticles);
-}
-
-function connectParticles() {
-  for (let a = 0; a < particles.length; a++) {
-    for (let b = a + 1; b < particles.length; b++) {
-      const dx = particles[a].x - particles[b].x;
-      const dy = particles[a].y - particles[b].y;
-      const distance = Math.sqrt(dx * dx + dy * dy);
-
-      if (distance < 115) {
-        ctx.beginPath();
-        ctx.moveTo(particles[a].x, particles[a].y);
-        ctx.lineTo(particles[b].x, particles[b].y);
-        ctx.strokeStyle = `rgba(143, 211, 255, ${0.16 * (1 - distance / 115)})`;
-        ctx.lineWidth = 0.8;
-        ctx.stroke();
-      }
-    }
-  }
-}
-
-window.addEventListener("mousemove", (event) => {
-  mouse.x = event.clientX;
-  mouse.y = event.clientY;
-});
-
-window.addEventListener("mouseleave", () => {
-  mouse.x = null;
-  mouse.y = null;
-});
-
-window.addEventListener("resize", resizeCanvas);
-
-resizeCanvas();
-updateParticles();
-"""
-
-readme = """# Web kecil untuk Ravi
-
-Ini versi web yang dibuat untuk Ravi: calming, sweet, bilingual, pakai lu-gua, ada particle, transisi antar halaman, tempat foto, dan tempat pesan pribadi.
-
-## File yang ada
-- `index.html`
-- `style.css`
-- `script.js`
-- folder `assets`
-
-Kamu paling sering cuma perlu edit `script.js`.
-
----
-
-## Cara ganti pesan pribadi
-
-Buka file `script.js`, cari bagian ini:
-
-```js
-const pesanPribadi = [
-  "Rav, gua nggak tau hari ini lu lagi berat atau biasa aja...",
-  "Gua seneng lu hadir di hidup gua...",
-  "Kalau suatu hari lu mikir lu nggak deserve to be loved...",
-  "I like you as you are, Ravi..."
-];
