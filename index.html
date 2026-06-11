@@ -2,7 +2,276 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
+  <meta name="<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>For Ravi 🌷</title>
+
+  <!-- PENTING: pastikan style.css ikut diupload sejajar dengan index.html -->
+  <link rel="stylesheet" href="./style.css" />
+
+  <!-- PENTING: script.js ikut diupload sejajar dengan index.html -->
+  <script src="./script.js" defer></script>
+</head>
+
+<body>
+  <canvas id="particles"></canvas>
+
+  <div class="bg-decoration flower one">✿</div>
+  <div class="bg-decoration flower two">✦</div>
+  <div class="bg-decoration flower three">♡</div>
+  <div class="bg-decoration cloud cloud-one"></div>
+  <div class="bg-decoration cloud cloud-two"></div>
+  <div class="bg-decoration cloud cloud-three"></div>
+
+  <main class="app">
+    <div class="phone-shell">
+      <div class="top-bar">
+        <div class="tiny-dots">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <p id="pageMiniTitle">for ravi</p>
+      </div>
+
+      <section class="page active" data-page="0">
+        <div class="cover page-inner">
+          <p class="tag">a tiny page for you</p>
+          <h1>Ravi,<br><span>pause dulu.</span></h1>
+
+          <p class="text">
+            Gua bikin ini bukan buat yang berlebihan. Cuma pengen ngasih lu
+            tempat kecil yang soft, tenang, dan jujur.
+          </p>
+
+          <div class="sticker-row">
+            <span>🌷</span>
+            <span>☁️</span>
+            <span>✨</span>
+            <span>🫧</span>
+          </div>
+
+          <button class="btn primary" data-next>
+            buka pelan-pelan
+            <span>→</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="page" data-page="1">
+        <div class="page-inner split">
+          <div>
+            <p class="tag">for the hardworker</p>
+            <h2>You did enough today.</h2>
+            <p class="text">
+              Gua tau lu hardworker. Lu bisa keliatan santai, tapi gua yakin
+              ada banyak hal yang lu pikirin dan lu tahan sendiri.
+            </p>
+            <p class="text muted">
+              So here’s your soft reminder: lu boleh capek. Lu boleh istirahat.
+              Lu nggak harus selalu jadi yang paling kuat.
+            </p>
+          </div>
+
+          <div class="mini-room">
+            <div class="window">
+              <div class="sun"></div>
+              <div class="hill hill-a"></div>
+              <div class="hill hill-b"></div>
+            </div>
+            <p>take your time, Rav.</p>
+          </div>
+
+          <div class="button-row">
+            <button class="btn secondary" data-prev>back</button>
+            <button class="btn primary" data-next>continue <span>→</span></button>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" data-page="2">
+        <div class="page-inner">
+          <p class="tag">about being loved</p>
+          <h2>You deserve love that feels safe.</h2>
+
+          <p class="text">
+            Beberapa kali gua lihat lu repost soal loving someone tapi kayak
+            ngerasa nggak deserve to be loved.
+          </p>
+
+          <p class="text">
+            Gua nggak mau sok paling ngerti isi kepala lu. Tapi kalau ada bagian
+            dari lu yang percaya itu, gua pengen pelan-pelan bantah.
+          </p>
+
+          <div class="soft-note">
+            <p>
+              Lu nggak harus sempurna dulu buat disayang.
+              Lu nggak harus selalu kuat dulu buat ditemenin.
+              Lu nggak harus “jadi cukup” dulu, karena buat gua lu udah cukup.
+            </p>
+          </div>
+
+          <p class="text">
+            I’m glad you exist in my life, Rav. Gua seneng lu hadir.
+          </p>
+
+          <div class="button-row">
+            <button class="btn secondary" data-prev>back</button>
+            <button class="btn primary" data-next>continue <span>→</span></button>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" data-page="3">
+        <div class="page-inner">
+          <p class="tag">little things</p>
+          <h2>Things I quietly like about you.</h2>
+
+          <div class="cards-grid">
+            <article class="tiny-card">
+              <span>01</span>
+              <h3>your effort</h3>
+              <p>Gua suka cara lu tetap jalan, bahkan pas mungkin lagi nggak gampang.</p>
+            </article>
+
+            <article class="tiny-card">
+              <span>02</span>
+              <h3>your presence</h3>
+              <p>Ada lu tuh rasanya bikin hari jadi lebih ringan, even in small ways.</p>
+            </article>
+
+            <article class="tiny-card">
+              <span>03</span>
+              <h3>your soft side</h3>
+              <p>Gua suka bagian lu yang mungkin nggak semua orang lihat.</p>
+            </article>
+          </div>
+
+          <div class="button-row">
+            <button class="btn secondary" data-prev>back</button>
+            <button class="btn primary" data-next>continue <span>→</span></button>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" data-page="4">
+        <div class="page-inner">
+          <p class="tag">our tiny gallery</p>
+          <h2>Tempat foto kita.</h2>
+
+          <p class="text">
+            Nanti lu tinggal masukin foto ke folder <b>assets</b>.
+            Kalau belum ada, kotaknya tetap lucu sebagai placeholder.
+          </p>
+
+          <div class="gallery" id="gallery"></div>
+
+          <div class="button-row">
+            <button class="btn secondary" data-prev>back</button>
+            <button class="btn primary" data-next>continue <span>→</span></button>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" data-page="5">
+        <div class="page-inner">
+          <p class="tag">bali someday</p>
+          <h2>One day, Bali?</h2>
+
+          <p class="text">
+            Kita pernah bilang mau jalan-jalan ke Bali. Gua masih inget itu.
+            Entah kapan jadi, tapi gua suka punya bayangan kecil soal itu.
+          </p>
+
+          <div class="bali-postcard">
+            <div class="postcard-sky">
+              <div class="postcard-sun"></div>
+              <div class="bird bird-a">⌁</div>
+              <div class="bird bird-b">⌁</div>
+            </div>
+            <div class="postcard-sea"></div>
+            <div class="postcard-sand"></div>
+            <div class="postcard-label">
+              <p>Bali someday</p>
+              <span>with you, hopefully.</span>
+            </div>
+          </div>
+
+          <p class="text muted">
+            Maybe someday it’s us, jalan sore, ketawa random, capek tapi happy.
+          </p>
+
+          <div class="button-row">
+            <button class="btn secondary" data-prev>back</button>
+            <button class="btn primary" data-next>continue <span>→</span></button>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" data-page="6">
+        <div class="page-inner">
+          <p class="tag">pesan dari gua</p>
+          <h2>Read this slowly.</h2>
+
+          <div class="message-list" id="messageList"></div>
+
+          <div class="button-row">
+            <button class="btn secondary" data-prev>back</button>
+            <button class="btn primary" data-next>last page <span>→</span></button>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" data-page="7">
+        <div class="page-inner final">
+          <p class="tag">last page</p>
+          <h2>Gua sayang lu, Rav.</h2>
+
+          <p class="text">
+            Bukan karena lu harus selalu kuat. Bukan karena lu harus selalu
+            ngerti semuanya. Tapi karena lu adalah lu.
+          </p>
+
+          <p class="text muted">
+            Kalau nanti ada hari yang berat, balik aja ke sini sebentar.
+            Let this page remind you:
+          </p>
+
+          <div class="final-bubble">
+            you are loved. softly, honestly, and on purpose.
+          </div>
+
+          <button class="btn primary" id="hugBtn">
+            send virtual hug
+            <span>♡</span>
+          </button>
+
+          <button class="btn secondary restart" data-restart>
+            ulang dari awal
+          </button>
+        </div>
+      </section>
+
+      <div class="bottom-area">
+        <div class="dots" id="dots"></div>
+        <div class="progress">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div class="toast" id="toast">
+    virtual hug sent. pelan-pelan ya, Rav.
+  </div>
+</body>
+</html>
+viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sunday 💗</title>
   <link rel="stylesheet" href="style.css" />
 </head>
