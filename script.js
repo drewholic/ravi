@@ -30,9 +30,9 @@ const fotoGallery = [
     caption: "ini juga random banget, tapi waktu nguli itu gua beneran kaya lu bawa ke versi diri lu yang gak pernah gua liat sebelumnya, lucu lu wkwk."
   },
   {
-    src: "",
-    label: "someday file",
-    caption: "foto yang suatu hari mungkin jadi bagian dari cerita Bali"
+    src: "assets/IMG_4407.png",
+    label: "past memories",
+    caption: "inget gak, ini pertama kalinya kita main bareng dan ini pertama kalinya kita ngobrol lama + intens. ngeselin banget bjir T_T"
   }
 ];
 
