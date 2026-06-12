@@ -7,8 +7,7 @@ const namaDia = "Ravi";
 // Pesan pribadi.
 // Satu paragraf = satu tanda kutip.
 const pesanPribadi = [
-  "Pi, i'm not always fluent in tenderness, but here's the simplest truth i know: i care for you deeply, quietly, and more honestly than i know how to say.
-",
+  "Pi, i'm not always fluent in tenderness, but here's the simplest truth i know: i care for you deeply, quietly, and more honestly than i know how to say.",
   "Gua seneng tiap kali lu hadir, bahkan dalam hal-hal kecil. Cara lu ngobrol, cara lu becanda, cara lu buat jadi diri lu sendiri — itu semua berarti buat gua.",
   "Gua harap lu selalu pilih diri lu dulu. Jangan ngejar sesuatu yang bikin lu terus nebak-nebak posisi lu di hidup seseorang.",
   "You deserve a love that feels certain, not a door left half-open only when someone feels lonely.",
