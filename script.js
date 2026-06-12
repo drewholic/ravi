@@ -7,12 +7,12 @@ const namaDia = "Ravi";
 // Pesan pribadi.
 // Satu paragraf = satu tanda kutip.
 const pesanPribadi = [
-  "Rav, gua nggak selalu pandai ngomong manis, tapi gua mau lu tau: gua sayang sama lu. Beneran.",
-  "Gua seneng tiap kali lu hadir, bahkan dalam hal-hal kecil. Cara lu ngobrol, cara lu bercanda, cara lu jadi diri lu sendiri — itu semua berarti buat gua.",
+  "Pi, i'm not always fluent in tenderness, but here's the simplest truth i know: i care for you deeply, quietly, and more honestly than i know how to say.",
+  "Gua seneng tiap kali lu hadir, bahkan dalam hal-hal kecil. Cara lu ngobrol, cara lu becanda, cara lu buat jadi diri lu sendiri — itu semua berarti buat gua.",
   "Gua harap lu selalu pilih diri lu dulu. Jangan ngejar sesuatu yang bikin lu terus nebak-nebak posisi lu di hidup seseorang.",
-  "Lu pantas disayang dengan jelas. Bukan cuma dicari pas dibutuhkan, bukan cuma didekatin pas orang itu lagi kosong, dan bukan dijadiin opsi sambil dia sendiri nggak pasti.",
-  "Cari orang yang nggak bikin lu bingung sendirian. Cari orang yang kalau sayang, kelihatan dari sikapnya. Dan sampai orang itu ada, jangan tinggalin diri lu sendiri ya.",
-  "Gua nggak bilang ini buat ngatur lu. Gua bilang ini karena gua peduli sama lu, dan gua pengen lu dapet sayang yang nggak bikin lu merasa kecil."
+  "You deserve a love that feels certain, not a door left half-open only when someone feels lonely.",
+  "Sekali lagi, choose the kind of love that doesn't leave you questioning your place in someone's heart.",
+  "Gua bilang gini bukan buat ngatur lu. Gua bilang gini karena gua peduli sama lu, dan gua pengen lu dapet sayang yang nggak bikin lu merasa kecil."
 ];
 
 // Memory section.
@@ -20,9 +20,9 @@ const pesanPribadi = [
 // Contoh: src: "assets/foto1.jpg"
 const fotoGallery = [
   {
-    src: "",
+    src: "assets/9066977841_87333876992724_1779554138246.png",
     label: "little frame",
-    caption: "tempat buat foto yang nanti paling kamu suka"
+    caption: "gua disini seneng banget, karena finally kita main lagi, kita main map lain. makasih yaa pi, udah luangin waktu lu buat main bareng gua."
   },
   {
     src: "",
