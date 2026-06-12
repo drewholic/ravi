@@ -25,9 +25,9 @@ const fotoGallery = [
     caption: "gua disini seneng banget, karena finally kita main lagi, kita main map lain. makasih yaa pi, udah luangin waktu lu buat main bareng gua."
   },
   {
-    src: "",
+    src: "assets/9066977841_113833408422260_1780085220419.png",
     label: "soft memory",
-    caption: "momen random yang nggak perlu sempurna buat tetap manis"
+    caption: "ini juga random banget, tapi waktu nguli itu gua beneran kaya lu bawa ke versi diri lu yang gak pernah gua liat sebelumnya, lucu lu wkwk."
   },
   {
     src: "",
