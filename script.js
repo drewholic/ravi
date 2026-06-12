@@ -1,36 +1,38 @@
 // ======================================================
-// EDIT DI SINI AJA DULU, BAGIAN LAIN NGGAK USAH DISENTUH
+// EDIT DI SINI AJA DULU
 // ======================================================
 
 const namaDia = "Ravi";
 
-// Pesan pribadi dari kamu.
-// Mau paste pesan panjang juga boleh.
-// Satu paragraf = satu baris di dalam tanda kutip.
+// Pesan pribadi.
+// Satu paragraf = satu tanda kutip.
 const pesanPribadi = [
-  "Rav, gua nggak tau hari ini lu lagi berat atau biasa aja. Tapi gua cuma mau bilang, gua bangga sama cara lu terus jalan meskipun mungkin capeknya nggak selalu keliatan.",
-  "Gua seneng lu hadir di hidup gua. Bukan karena lu harus jadi siapa-siapa, tapi karena ada lu aja udah bikin banyak hal terasa lebih hangat.",
-  "Kalau suatu hari lu mikir lu nggak deserve to be loved, please inget halaman ini. Menurut gua, lu pantas disayang dengan tenang, bukan cuma saat lu kuat atau saat semuanya baik-baik aja.",
-  "I like you as you are, Ravi. Not as a version that needs to prove something first."
+  "Rav, gua nggak selalu pandai ngomong manis, tapi gua mau lu tau: gua sayang sama lu. Beneran.",
+  "Gua seneng tiap kali lu hadir, bahkan dalam hal-hal kecil. Cara lu ngobrol, cara lu bercanda, cara lu jadi diri lu sendiri — itu semua berarti buat gua.",
+  "Gua harap lu selalu pilih diri lu dulu. Jangan ngejar sesuatu yang bikin lu terus nebak-nebak posisi lu di hidup seseorang.",
+  "Lu pantas disayang dengan jelas. Bukan cuma dicari pas dibutuhkan, bukan cuma didekatin pas orang itu lagi kosong, dan bukan dijadiin opsi sambil dia sendiri nggak pasti.",
+  "Cari orang yang nggak bikin lu bingung sendirian. Cari orang yang kalau sayang, kelihatan dari sikapnya. Dan sampai orang itu ada, jangan tinggalin diri lu sendiri ya.",
+  "Gua nggak bilang ini buat ngatur lu. Gua bilang ini karena gua peduli sama lu, dan gua pengen lu dapet sayang yang nggak bikin lu merasa kecil."
 ];
 
-// Foto gallery.
-// Cara pakai:
-// 1. Masukkan foto ke folder assets.
-// 2. Ganti src kosong menjadi nama file foto.
+// Memory section.
+// Taruh foto di folder assets, lalu isi src.
 // Contoh: src: "assets/foto1.jpg"
 const fotoGallery = [
   {
     src: "",
-    caption: "foto pertama yang mau lu taruh di sini"
+    label: "little frame",
+    caption: "tempat buat foto yang nanti paling kamu suka"
   },
   {
     src: "",
-    caption: "momen kecil yang rasanya worth remembering"
+    label: "soft memory",
+    caption: "momen random yang nggak perlu sempurna buat tetap manis"
   },
   {
     src: "",
-    caption: "maybe one day: Bali, us, and a slow afternoon"
+    label: "someday file",
+    caption: "foto yang suatu hari mungkin jadi bagian dari cerita Bali"
   }
 ];
 
@@ -38,90 +40,29 @@ const fotoGallery = [
 // KODE DI BAWAH INI NGGAK PERLU DIUBAH
 // ======================================================
 
-const pages = Array.from(document.querySelectorAll(".page"));
-const progressFill = document.getElementById("progressFill");
-const dotsContainer = document.getElementById("dots");
-const pageMiniTitle = document.getElementById("pageMiniTitle");
-const messageList = document.getElementById("messageList");
-const gallery = document.getElementById("gallery");
+const messageBoard = document.getElementById("messageBoard");
+const memoryGrid = document.getElementById("memoryGrid");
 const toast = document.getElementById("toast");
+const scrollProgress = document.getElementById("scrollProgress");
 
-let currentPage = 0;
+pesanPribadi.forEach((pesan, index) => {
+  const note = document.createElement("article");
+  note.className = "message-note reveal";
+  note.dataset.label = `note ${String(index + 1).padStart(2, "0")}`;
 
-const pageNames = [
-  "for ravi",
-  "hardworker note",
-  "soft reminder",
-  "little things",
-  "tiny gallery",
-  "bali someday",
-  "pesan dari gua",
-  "last page"
-];
-
-function makeDots() {
-  pages.forEach((_, index) => {
-    const dot = document.createElement("button");
-    dot.className = "dot";
-    dot.setAttribute("aria-label", `buka halaman ${index + 1}`);
-    dot.addEventListener("click", () => showPage(index));
-    dotsContainer.appendChild(dot);
-  });
-}
-
-function updateDots() {
-  const dots = Array.from(document.querySelectorAll(".dot"));
-  dots.forEach((dot, index) => {
-    dot.classList.toggle("active", index === currentPage);
-  });
-}
-
-function showPage(index) {
-  if (index < 0 || index >= pages.length) return;
-
-  pages[currentPage].classList.remove("active");
-  currentPage = index;
-  pages[currentPage].classList.add("active");
-
-  progressFill.style.width = `${((currentPage + 1) / pages.length) * 100}%`;
-  pageMiniTitle.textContent = pageNames[currentPage] || "for ravi";
-
-  updateDots();
-  burstPieces(window.innerWidth / 2, window.innerHeight - 90, 9);
-}
-
-document.querySelectorAll("[data-next]").forEach((button) => {
-  button.addEventListener("click", () => showPage(currentPage + 1));
-});
-
-document.querySelectorAll("[data-prev]").forEach((button) => {
-  button.addEventListener("click", () => showPage(currentPage - 1));
-});
-
-document.querySelectorAll("[data-restart]").forEach((button) => {
-  button.addEventListener("click", () => showPage(0));
-});
-
-document.addEventListener("keydown", (event) => {
-  if (event.key === "ArrowRight") showPage(currentPage + 1);
-  if (event.key === "ArrowLeft") showPage(currentPage - 1);
-});
-
-makeDots();
-showPage(0);
-
-pesanPribadi.forEach((isiPesan) => {
   const p = document.createElement("p");
-  p.textContent = isiPesan;
-  messageList.appendChild(p);
+  p.textContent = pesan;
+
+  note.appendChild(p);
+  messageBoard.appendChild(note);
 });
 
 fotoGallery.forEach((item, index) => {
-  const frame = document.createElement("div");
-  frame.className = "frame";
+  const card = document.createElement("article");
+  card.className = "memory-card reveal";
 
   const imageBox = document.createElement("div");
-  imageBox.className = "frame-image";
+  imageBox.className = "memory-image";
 
   if (item.src && item.src.trim() !== "") {
     const img = document.createElement("img");
@@ -129,54 +70,90 @@ fotoGallery.forEach((item, index) => {
     img.alt = item.caption || `foto ${index + 1}`;
     imageBox.appendChild(img);
   } else {
-    imageBox.textContent = `taruh foto ${index + 1} di sini`;
+    imageBox.textContent = `foto ${index + 1}`;
   }
 
-  const caption = document.createElement("p");
-  caption.textContent = item.caption;
+  const textBox = document.createElement("div");
+  textBox.className = "memory-text";
 
-  frame.appendChild(imageBox);
-  frame.appendChild(caption);
-  gallery.appendChild(frame);
+  const label = document.createElement("span");
+  label.textContent = item.label || `memory ${index + 1}`;
+
+  const caption = document.createElement("p");
+  caption.textContent = item.caption || "";
+
+  textBox.appendChild(label);
+  textBox.appendChild(caption);
+
+  card.appendChild(imageBox);
+  card.appendChild(textBox);
+  memoryGrid.appendChild(card);
 });
 
-document.getElementById("hugBtn").addEventListener("click", (event) => {
+const revealItems = document.querySelectorAll(".reveal");
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("show");
+    }
+  });
+}, {
+  threshold: 0.16
+});
+
+revealItems.forEach((item) => observer.observe(item));
+
+function showToast() {
   toast.classList.add("show");
-  burstPieces(event.clientX, event.clientY, 22);
 
   setTimeout(() => {
     toast.classList.remove("show");
-  }, 2300);
-});
+  }, 2200);
+}
 
-function burstPieces(x, y, total) {
-  const pieces = ["♡", "✦", "✿", "✨", "🫧", "☁️", "🌷"];
+function burstPieces(x, y, total = 18) {
+  const pieces = ["♡", "✦", "✿", "☾", "✨", "☁️"];
 
   for (let i = 0; i < total; i++) {
     const piece = document.createElement("div");
     piece.className = "float-piece";
     piece.textContent = pieces[Math.floor(Math.random() * pieces.length)];
-    piece.style.left = `${x + Math.random() * 150 - 75}px`;
-    piece.style.top = `${y + Math.random() * 55 - 25}px`;
-    piece.style.animationDelay = `${Math.random() * 0.25}s`;
+    piece.style.left = `${x + Math.random() * 140 - 70}px`;
+    piece.style.top = `${y + Math.random() * 50 - 25}px`;
+    piece.style.animationDelay = `${Math.random() * 0.22}s`;
     document.body.appendChild(piece);
 
-    setTimeout(() => piece.remove(), 1500);
+    setTimeout(() => piece.remove(), 1400);
   }
 }
 
+document.getElementById("hugBtn").addEventListener("click", (event) => {
+  showToast();
+  burstPieces(event.clientX, event.clientY, 24);
+});
+
+document.getElementById("tinyHugBtn").addEventListener("click", (event) => {
+  showToast();
+  burstPieces(event.clientX, event.clientY, 16);
+});
+
+window.addEventListener("scroll", () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+  scrollProgress.style.width = `${progress}%`;
+});
+
 // ======================================================
-// PARTICLES LUCU: BINTANG, BUBBLE, HEART KECIL
+// PARTICLES
 // ======================================================
 
 const canvas = document.getElementById("particles");
 const ctx = canvas.getContext("2d");
 
 let particles = [];
-let mouse = {
-  x: null,
-  y: null
-};
+let mouse = { x: null, y: null };
 
 function resizeCanvas() {
   canvas.width = window.innerWidth;
@@ -186,40 +163,38 @@ function resizeCanvas() {
 
 function createParticles() {
   particles = [];
-  const total = Math.min(115, Math.floor((window.innerWidth * window.innerHeight) / 11000));
-  const shapes = ["circle", "star", "heart"];
+  const total = Math.min(115, Math.floor((window.innerWidth * window.innerHeight) / 11200));
+  const shapes = ["dot", "star", "heart", "moon"];
 
   for (let i = 0; i < total; i++) {
     particles.push({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
-      size: Math.random() * 5 + 3,
-      dx: (Math.random() - 0.5) * 0.45,
-      dy: (Math.random() - 0.5) * 0.45,
-      alpha: Math.random() * 0.42 + 0.25,
+      size: Math.random() * 4 + 2.1,
+      dx: (Math.random() - 0.5) * 0.38,
+      dy: (Math.random() - 0.5) * 0.38,
+      alpha: Math.random() * 0.38 + 0.22,
       shape: shapes[Math.floor(Math.random() * shapes.length)]
     });
   }
 }
 
-function drawCircle(p) {
+function drawDot(p) {
   ctx.beginPath();
   ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-  ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha})`;
+  ctx.fillStyle = `rgba(255, 248, 241, ${p.alpha})`;
   ctx.fill();
-  ctx.strokeStyle = `rgba(255, 143, 189, ${p.alpha * 0.45})`;
-  ctx.stroke();
 }
 
 function drawStar(p) {
   ctx.save();
   ctx.translate(p.x, p.y);
-  ctx.rotate(Date.now() / 1800);
+  ctx.rotate(Date.now() / 2200);
   ctx.beginPath();
 
-  for (let i = 0; i < 10; i++) {
-    const radius = i % 2 === 0 ? p.size : p.size / 2.4;
-    const angle = (Math.PI * 2 * i) / 10;
+  for (let i = 0; i < 8; i++) {
+    const radius = i % 2 === 0 ? p.size * 1.3 : p.size / 2.3;
+    const angle = (Math.PI * 2 * i) / 8;
     const x = Math.cos(angle) * radius;
     const y = Math.sin(angle) * radius;
 
@@ -228,7 +203,7 @@ function drawStar(p) {
   }
 
   ctx.closePath();
-  ctx.fillStyle = `rgba(255, 234, 167, ${p.alpha})`;
+  ctx.fillStyle = `rgba(255, 231, 176, ${p.alpha})`;
   ctx.fill();
   ctx.restore();
 }
@@ -241,15 +216,30 @@ function drawHeart(p) {
   ctx.moveTo(0, 6);
   ctx.bezierCurveTo(-14, -5, -8, -17, 0, -9);
   ctx.bezierCurveTo(8, -17, 14, -5, 0, 6);
-  ctx.fillStyle = `rgba(255, 143, 189, ${p.alpha})`;
+  ctx.fillStyle = `rgba(255, 157, 191, ${p.alpha})`;
+  ctx.fill();
+  ctx.restore();
+}
+
+function drawMoon(p) {
+  ctx.save();
+  ctx.beginPath();
+  ctx.arc(p.x, p.y, p.size * 1.25, 0, Math.PI * 2);
+  ctx.fillStyle = `rgba(255, 231, 176, ${p.alpha})`;
+  ctx.fill();
+
+  ctx.beginPath();
+  ctx.arc(p.x + p.size * 0.52, p.y - p.size * 0.15, p.size * 1.25, 0, Math.PI * 2);
+  ctx.fillStyle = "rgba(25, 24, 39, 0.96)";
   ctx.fill();
   ctx.restore();
 }
 
 function drawParticle(p) {
-  if (p.shape === "circle") drawCircle(p);
+  if (p.shape === "dot") drawDot(p);
   if (p.shape === "star") drawStar(p);
   if (p.shape === "heart") drawHeart(p);
+  if (p.shape === "moon") drawMoon(p);
 }
 
 function animateParticles() {
@@ -267,7 +257,7 @@ function animateParticles() {
       const dy = mouse.y - p.y;
       const distance = Math.sqrt(dx * dx + dy * dy);
 
-      if (distance < 115) {
+      if (distance < 120) {
         p.x -= dx / 95;
         p.y -= dy / 95;
       }
@@ -287,12 +277,12 @@ function connectParticles() {
       const dy = particles[a].y - particles[b].y;
       const distance = Math.sqrt(dx * dx + dy * dy);
 
-      if (distance < 95) {
+      if (distance < 96) {
         ctx.beginPath();
         ctx.moveTo(particles[a].x, particles[a].y);
         ctx.lineTo(particles[b].x, particles[b].y);
-        ctx.strokeStyle = `rgba(255, 143, 189, ${0.13 * (1 - distance / 95)})`;
-        ctx.lineWidth = 0.8;
+        ctx.strokeStyle = `rgba(255, 157, 191, ${0.11 * (1 - distance / 96)})`;
+        ctx.lineWidth = 0.75;
         ctx.stroke();
       }
     }
