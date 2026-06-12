@@ -21,9 +21,9 @@ const pesanPribadi = [
 // Contoh: src: "assets/foto1.jpg"
 const fotoGallery = [
   {
-    src: "",
+    src: "assets/9066977841_87333876992724_1779554138246.png",
     label: "little frame",
-    caption: "tempat buat foto yang nanti paling kamu suka"
+    caption: "gua disini seneng banget, karena finally kita main lagi, kita main map lain. makasih yaa pi, udah luangin waktu lu buat main bareng gua."
   },
   {
     src: "",
